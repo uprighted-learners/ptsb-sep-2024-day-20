@@ -17,9 +17,17 @@ function createMonster(name, health, strength, specialAttack) {
     }
 }
 
+function randomHealth() {
+    return Math.floor((Math.random() * 100) * (Math.random() * 10) + 1) + 1;
+}
+
+function randomStrength() {
+    return Math.floor((Math.random() * 10) * (Math.random() * 10) + 1) + 1;
+}
+
 // our monsters
-let monsterA = createMonster("Frank the Frankenstein", 150, 19, "stomp");
-let monsterB = createMonster("Agatha Harkness", 212, 9, "lightning bolt");
+let monsterA = createMonster("Frank the Frankenstein", randomHealth(), randomStrength(), "stomp");
+let monsterB = createMonster("Agatha Harkness", randomHealth(), randomStrength(), "lightning bolt");
 
 // function to display the monster stats
 function displayStats(monster) {
@@ -30,6 +38,7 @@ function displayStats(monster) {
 
 // function to battle our monsters inside of a loop
 function battle(monsterA, monsterB) {
+    console.log(`${monsterA.name} vs ${monsterB.name}!`);
     while (!monsterA.isDefeated() && !monsterB.isDefeated()) {
         monsterA.attack(monsterB);
         displayStats(monsterB);
@@ -44,6 +53,9 @@ function battle(monsterA, monsterB) {
     } else {
         console.log(`${monsterB.name} has been defeated!`);
     }
+
+    console.log("*** BATTLE OVER ***");
 }
 
+// invoke the battle function
 battle(monsterA, monsterB);
