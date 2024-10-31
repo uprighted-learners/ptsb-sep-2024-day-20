@@ -6,37 +6,44 @@ function createMonster(name, health, strength, specialAttack) {
         strength: strength,
         specialAttack: specialAttack,
         attack(target) {
+            let damage = this.strength * Math.floor(Math.random() * 10) + 1;
             // the target amount of health would decrease by the amount of strength of the attacking monster
-            target.health -= this.strength;
-            console.log(`${this.name} attacks ${target.name} for ${this.strength} damage!`);
+            target.health -= damage;
+            console.log(`${this.name} attacks ${target.name} for ${damage} damage!`);
+        },
+        isDefeated() {
+            return this.health <= 0;
         },
     }
 }
 
 // our monsters
-let monsterA = createMonster("Frank the Frankenstein", 150, 15, "stomp");
+let monsterA = createMonster("Frank the Frankenstein", 150, 19, "stomp");
 let monsterB = createMonster("Agatha Harkness", 212, 9, "lightning bolt");
-
-// monsterA attacks monsterB
-monsterA.attack(monsterB);
-
-// monsterB attacks monsterA
-monsterB.attack(monsterA);
-
 
 // function to display the monster stats
 function displayStats(monster) {
+    if (monster.health < 0) monster.health = 0;
+
     console.log(`${monster.name} has ${monster.health} health.`)
 }
 
-displayStats(monsterA);
-displayStats(monsterB);
+// function to battle our monsters inside of a loop
+function battle(monsterA, monsterB) {
+    while (!monsterA.isDefeated() && !monsterB.isDefeated()) {
+        monsterA.attack(monsterB);
+        displayStats(monsterB);
+        if (!monsterB.isDefeated()) {
+            monsterB.attack(monsterA);
+            displayStats(monsterA);
+        }
+    }
 
-// monsterA attacks monsterB
-monsterA.attack(monsterB);
+    if (monsterA.isDefeated()) {
+        console.log(`${monsterA.name} has been defeated!`);
+    } else {
+        console.log(`${monsterB.name} has been defeated!`);
+    }
+}
 
-// monsterB attacks monsterA
-monsterB.attack(monsterA);
-
-displayStats(monsterA);
-displayStats(monsterB);
+battle(monsterA, monsterB);
