@@ -5,22 +5,28 @@ function createMonster(name, health, strength, specialAttack) {
         health: health,
         strength: strength,
         specialAttack: specialAttack,
+
+        // function to attack the target an opposing monster
         attack(target) {
             let damage = this.strength * Math.floor(Math.random() * 10) + 1;
             // the target amount of health would decrease by the amount of strength of the attacking monster
             target.health -= damage;
             console.log(`${this.name} attacks ${target.name} for ${damage} damage!`);
         },
+
+        // boolean function to check if the monster is defeated
         isDefeated() {
             return this.health <= 0;
         },
     }
 }
 
+// function to randomly generate the health of the monster
 function randomHealth() {
     return Math.floor((Math.random() * 100) * (Math.random() * 10) + 1) + 1;
 }
 
+// function to randomly generate the strength of the monster
 function randomStrength() {
     return Math.floor((Math.random() * 10) * (Math.random() * 10) + 1) + 1;
 }
